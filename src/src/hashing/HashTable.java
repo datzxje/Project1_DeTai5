@@ -23,7 +23,7 @@ public class HashTable {
     }
 
     public void updateScore(int studentID, float newScore) {
-        Student student = (Student) table.get(studentID);
+        Student student = table.get(studentID);
         if (student != null) {
             student.setScore(newScore);
             System.out.println("Điểm của sinh viên " + studentID + " đã được cập nhật");

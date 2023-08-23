@@ -12,10 +12,11 @@ public class HashTest {
     public static void main(String[] args) {
         HashTable hashTable = new HashTable();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/student_data/student_data.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/student_data/student_data.csv"))) {
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" - ");
+                String[] parts = line.split(",");
                 if (parts.length == 5) {
                     int studentID = Integer.parseInt(parts[0]);
                     String name = parts[1];
