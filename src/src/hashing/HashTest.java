@@ -40,7 +40,7 @@ public class HashTest {
                 case 2 -> updateScore(hashTable);
                 case 3 -> deleteStudent(hashTable);
             }
-//            updateInputFile(hashTable);
+
             showMenu();
             option = keyboard.nextInt();
         }
@@ -50,8 +50,9 @@ public class HashTest {
     private static void showStudentInf(HashTable hashTable) {
         System.out.println("Nhập vào MSSV: ");
         int studentID = keyboard.nextInt();
+        int hashValued = hashTable.hashStudentID(studentID);
 
-        Student student = hashTable.get(studentID);
+        Student student = hashTable.get(hashValued);
         if (student != null) {
             System.out.println("--------------------------------");
             System.out.println("Student ID: " + studentID);
@@ -80,24 +81,33 @@ public class HashTest {
         int studentID = keyboard.nextInt();
 
         hashTable.delete(studentID);
+        updateInputFile(studentID);
     }
 
-//    private static void updateInputFile(HashTable hashTable) {
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\admin\\Desktop\\Project1_DeTai5\\student_data\\student_data.txt"))) {
-//            for (Integer studentID : hashTable.getAllStudentIDs()) {
-//                student.Student student = hashTable.get(studentID);
-//                writer.write(studentID + " - " + student.name + " - " + student.yearOfBirth + " - " + student.score + " - " + student.avgScore);
-//                writer.newLine();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private static void updateInputFile(int studentIDDeleted) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/student_data/student_data.csv"));
+             BufferedWriter bw = new BufferedWriter(new FileWriter("src/student_data/student_data.csv"))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                int studentID = Integer.parseInt(parts[0]);
+                if (studentID != studentIDDeleted) {
+                    bw.write(line);
+                    bw.newLine();
+                }
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void showMenu () {
         System.out.println("Student Management Application: ");
         System.out.println("--------------------------------");
-        System.out.println("1. Show student information");
+        System.out.println("1. Show student information by id");
         System.out.println("2. Update score by id");
         System.out.println("3. Delete student by id");
         System.out.println("0. Exit");

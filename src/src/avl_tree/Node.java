@@ -13,8 +13,6 @@ public class Node {
         this.studentID = studentID;
         this.student = student;
         this.height = 1;
-        this.left = null;
-        this.right = null;
     }
 
     public int getStudentID() {

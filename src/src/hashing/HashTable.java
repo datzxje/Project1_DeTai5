@@ -2,9 +2,12 @@ package hashing;
 
 import student.Student;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+
+import static java.lang.Math.pow;
 
 public class HashTable {
     private Hashtable<Integer, Student> table;
@@ -15,8 +18,12 @@ public class HashTable {
 
     public void insert(int studentID, String name, int yearOfBirth, float score, float avgScore) {
         Student student = new Student(name, yearOfBirth, score, avgScore);
-        table.put(studentID, student);
+        int hashValued = hashStudentID(studentID);
+        table.put(hashValued, student);
     }
+
+    public int hashStudentID(int studentID) {
+        return (int) ((studentID % pow(2,27)) / (pow(2,13)));    }
 
     public Student get(int studentID) {
         return table.get(studentID);
@@ -41,12 +48,6 @@ public class HashTable {
             System.out.println("Không có sinh viên với MSSV " + studentID + " trong danh sách");
             System.out.println("********************************");
         }
-    }
-
-    public List<Student> getAllStudents() {
-        List<Student> allStudents = new ArrayList<>();
-        allStudents.addAll(table.values());
-        return allStudents;
     }
 
     public List<Integer> getAllStudentIDs() {
