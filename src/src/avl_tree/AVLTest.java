@@ -23,7 +23,7 @@ public class AVLTest {
                     int yearOfBirth = Integer.parseInt(parts[2]);
                     float score = Float.parseFloat(parts[3]);
                     float avgScore = Float.parseFloat(parts[4]);
-                    Student student = new Student(name, yearOfBirth, score, avgScore);
+                    Student student = new Student(studentID, name, yearOfBirth, score, avgScore);
                     avlTree.insert(studentID, student);
                 }
             }
