@@ -23,7 +23,8 @@ public class HashTest {
                     int yearOfBirth = Integer.parseInt(parts[2]);
                     float score = Float.parseFloat(parts[3]);
                     float avgScore = Float.parseFloat(parts[4]);
-                    hashTable.insert(studentID, name, yearOfBirth, score, avgScore);
+                    Student student = new Student(studentID, name, yearOfBirth, score, avgScore);
+                    hashTable.insert(studentID, student);
                 }
             }
         } catch (IOException e) {

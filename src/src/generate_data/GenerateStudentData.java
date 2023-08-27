@@ -33,7 +33,7 @@ public class GenerateStudentData {
     }
 
     private static String generateStudentId() {
-        return "2021" + (1000 + new Random().nextInt(9000));
+        return "" + new Random().nextInt(99999999);
     }
 
     private static String generateName(String[] firstNames, String[] lastNames) {
