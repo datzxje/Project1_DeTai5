@@ -2,7 +2,6 @@ package hashing;
 
 import student.Student;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -10,27 +9,47 @@ import java.util.List;
 import static java.lang.Math.pow;
 
 public class HashTable {
-    private Hashtable<Integer, Student> table;
+    private Student[] table;
+    private int modulo = 3307;
 
     public HashTable() {
-        table = new Hashtable<>();
+        table = new Student[modulo];
     }
 
-    public void insert(int studentID, String name, int yearOfBirth, float score, float avgScore) {
-        Student student = new Student(name, yearOfBirth, score, avgScore);
+    public void insert(int studentID, Student student) {
         int hashValued = hashStudentID(studentID);
-        table.put(hashValued, student);
+
+        int index = hashValued;
+        while (table[index] != null) {
+            index = (index + 1) % modulo;
+        }
+
+        table[index] = student;
     }
 
     public int hashStudentID(int studentID) {
-        return (int) ((studentID % pow(2,27)) / (pow(2,13)));    }
+        int firstPart = studentID / 10000; // Lấy 4 chữ số đầu tiên
+        int secondPart = studentID % 10000; // Lấy 4 chữ số cuối cùng
+        int sum = firstPart + secondPart; // Tính tổng hai phần
+        return sum % modulo; // Băm tổng theo phương thức chia lấy dư với số nguyên tố
+    }
 
     public Student get(int studentID) {
-        return table.get(studentID);
+        int hashValue = hashStudentID(studentID);
+
+        int index = hashValue;
+        while (table[index] != null) {
+            if (table[index].getStudentID() == studentID) {
+                return table[index];
+            }
+            index = (index + 1) % modulo;
+        }
+
+        return null; // Không tìm thấy
     }
 
     public void updateScore(int studentID, float newScore) {
-        Student student = table.get(studentID);
+        Student student = get(studentID);
         if (student != null) {
             student.setScore(newScore);
             System.out.println("Điểm của sinh viên " + studentID + " đã được cập nhật");
@@ -39,18 +58,30 @@ public class HashTable {
     }
 
     public void delete(int studentID) {
-        if (table.containsKey(studentID)) {
-            table.remove(studentID);
-            System.out.println("Đã xóa sinh viên ra khỏi danh sách với MSSV " + studentID);
-            System.out.println("********************************");
+        int hashValue = hashStudentID(studentID);
+
+        int index = hashValue;
+        while (table[index] != null) {
+            if (table[index].getStudentID() == studentID) {
+                table[index] = null;
+                System.out.println("Đã xóa sinh viên ra khỏi danh sách với MSSV " + studentID);
+                System.out.println("********************************");
+                return;
+            }
+            index = (index + 1) % modulo;
         }
-        else {
-            System.out.println("Không có sinh viên với MSSV " + studentID + " trong danh sách");
-            System.out.println("********************************");
-        }
+
+        System.out.println("Không có sinh viên với MSSV " + studentID + " trong danh sách");
+        System.out.println("********************************");
     }
 
     public List<Integer> getAllStudentIDs() {
-        return new ArrayList<>(table.keySet());
+        List<Integer> studentIDs = new ArrayList<>();
+        for (Student student : table) {
+            if (student != null) {
+                studentIDs.add(student.getStudentID());
+            }
+        }
+        return studentIDs;
     }
 }

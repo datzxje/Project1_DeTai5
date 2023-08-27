@@ -1,16 +1,22 @@
 package student;
 
 public class Student {
+    protected int studentID;
     protected String name;
     protected int yearOfBirth;
     protected float score;
     protected float avgScore;
 
-    public Student(String name, int yearOfBirth, float score, float avgScore) {
+    public Student(int studentID, String name, int yearOfBirth, float score, float avgScore) {
+        this.studentID = studentID;
         this.name = name;
         this.yearOfBirth = yearOfBirth;
         this.score = score;
         this.avgScore = avgScore;
+    }
+
+    public int getStudentID() {
+        return studentID;
     }
 
     public String getName() {
