@@ -8,11 +8,12 @@ import java.util.Scanner;
 public class HashTest {
 
     private static Scanner keyboard = new Scanner(System.in);
+    private static String path = "src/student_data/student_data.csv";
 
     public static void main(String[] args) {
         HashTable hashTable = new HashTable();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/student_data/student_data.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
@@ -51,9 +52,8 @@ public class HashTest {
     private static void showStudentInf(HashTable hashTable) {
         System.out.println("Nhập vào MSSV: ");
         int studentID = keyboard.nextInt();
-        int hashValued = hashTable.hashStudentID(studentID);
+        Student student = hashTable.get(studentID);
 
-        Student student = hashTable.get(hashValued);
         if (student != null) {
             System.out.println("--------------------------------");
             System.out.println("Student ID: " + studentID);
@@ -74,7 +74,7 @@ public class HashTest {
         float score = keyboard.nextFloat();
 
         hashTable.updateScore(studentID, score);
-
+        updateInputFile(hashTable);
     }
 
     private static void deleteStudent(HashTable hashTable) {
@@ -82,24 +82,17 @@ public class HashTest {
         int studentID = keyboard.nextInt();
 
         hashTable.delete(studentID);
-        updateInputFile(studentID);
+        updateInputFile(hashTable);
     }
 
-    private static void updateInputFile(int studentIDDeleted) {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/student_data/student_data.csv"));
-             BufferedWriter bw = new BufferedWriter(new FileWriter("src/student_data/student_data.csv"))) {
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                int studentID = Integer.parseInt(parts[0]);
-                if (studentID != studentIDDeleted) {
-                    bw.write(line);
-                    bw.newLine();
-                }
+    private static void updateInputFile(HashTable hashTable) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+            writer.write("Ma sinh vien,Ho ten,Nam sinh,Diem trung tuyen,Diem TB");
+            writer.newLine();
+            for (Student student : hashTable.getAllStudents()) {
+                writer.write(student.getStudentID() + "," + student.getName() + "," + student.getYearOfBirth() + "," + student.getScore() + "," + student.getAvgScore());
+                writer.newLine();
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
