@@ -40,7 +40,7 @@ public class HashTable {
             }
         }
 
-        return null; // Không tìm thấy
+        return null;
     }
 
     public void updateScore(int studentID, float newScore) {
@@ -86,13 +86,4 @@ public class HashTable {
 
         return allStudents;
     }
-//    public List<Integer> getAllStudentIDs() {
-//        List<Integer> studentIDs = new ArrayList<>();
-//        for (Student student : table) {
-//            if (student != null) {
-//                studentIDs.add(student.getStudentID());
-//            }
-//        }
-//        return studentIDs;
-//    }
 }

@@ -2,7 +2,6 @@ package avl_tree;
 
 import student.Student;
 
-
 public class AVLTree {
     protected Node root;
 
@@ -109,7 +108,8 @@ public class AVLTree {
 
     public Node delete(Node node, int studentID) {
         if (node == null) {
-            return null; // Node not found, return null
+            System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+            return null;
         }
 
         if (studentID < node.getStudentID()) {
@@ -175,5 +175,5 @@ public class AVLTree {
             return search(node.right, studentID);
         }
     }
-    
+
 }
