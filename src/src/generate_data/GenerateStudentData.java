@@ -32,8 +32,16 @@ public class GenerateStudentData {
         }
     }
 
-    private static String generateStudentId() {
-        return "" + new Random().nextInt(99999999);
+    private static String generateStudentId(){
+            int numberOfRandomNumbers = 5000;
+            Random random = new Random();
+            String formattedNumber = "";
+
+            for (int i = 0; i < numberOfRandomNumbers; i++) {
+                int randomNumber = random.nextInt(100000000);
+                formattedNumber = String.format("%08d", randomNumber);
+            }
+            return formattedNumber;
     }
 
     private static String generateName(String[] firstNames, String[] lastNames) {

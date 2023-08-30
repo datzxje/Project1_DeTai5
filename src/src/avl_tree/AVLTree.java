@@ -113,11 +113,10 @@ public class AVLTree {
         }
 
         if (studentID < node.getStudentID()) {
-            node.left = delete(node.left, studentID); // Search in the left subtree
+            node.left = delete(node.left, studentID);
         } else if (studentID > node.getStudentID()) {
-            node.right = delete(node.right, studentID); // Search in the right subtree
+            node.right = delete(node.right, studentID);
         } else {
-            // Node to be deleted is found
 
             if (node.left == null || node.right == null) {
                 // Node has at most one child
@@ -128,10 +127,10 @@ public class AVLTree {
                 }
             } else {
                 // Node has two children
-                Node minRight = findMin(node.right); // Find the inorder successor
+                Node minRight = findMin(node.right);
                 node.setStudentID(minRight.getStudentID());
                 node.setStudent(minRight.getStudent());
-                node.right = delete(node.right, minRight.getStudentID()); // Delete the inorder successor
+                node.right = delete(node.right, minRight.getStudentID());
             }
         }
 
