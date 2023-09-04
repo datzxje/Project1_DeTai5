@@ -13,18 +13,18 @@ public class AVLTree {
         return root;
     }
 
-    public void setRoot(Node root) {
-        this.root = root;
-    }
+    public int height(Node node) {
+        if (node == null)
+            return 0;
 
-    private int height(Node node) {
-        return node != null ? node.height : -1;
+        return node.height;
     }
 
     private Node rotateLeft(Node node) {
-        Node temp = node.left;
-        node.left = temp.right;
-        temp.right = node;
+        Node temp = node.right;
+        Node temp2 = temp.left;
+        temp.left = node;
+        node.right = temp2;
 
         node.height = Math.max(height(node.left),height(node.right)) + 1;
         temp.height = Math.max(height(temp.left),height(temp.right)) + 1;
@@ -33,9 +33,10 @@ public class AVLTree {
     }
 
     private Node rotateRight(Node node) {
-        Node temp = node.right;
-        node.right = temp.left;
-        temp.left = node;
+        Node temp = node.left;
+        Node temp2 = temp.right;
+        temp.right = node;
+        node.left = temp2;
 
         node.height = Math.max(height(node.left),height(node.right)) + 1;
         temp.height = Math.max(height(temp.left),height(temp.right)) + 1;
@@ -53,30 +54,48 @@ public class AVLTree {
     }
 
     public Node insert(Node node, int studentID, Student student) {
-        if (node == null) {
-            node = new Node(studentID, student);
+        if (node == null)
+            return (new Node(studentID,student));
+
+        if (studentID < node.getStudentID())
+            node.left = insert(node.left, studentID, student);
+        else if (studentID > node.getStudentID())
+            node.right = insert(node.right, studentID,student);
+        else
+            return node;
+
+        node.height = 1 + Math.max(height(node.left), height(node.right));
+
+        int balance = getBalance(node);
+
+        //Left Left Case
+        if (balance > 1 && studentID < node.left.getStudentID())
+            return rotateRight(node);
+
+        // Right Right Case
+        if (balance < -1 && studentID > node.right.getStudentID())
+            return rotateLeft(node);
+
+        // Left Right Case
+        if (balance > 1 && studentID > node.left.getStudentID()) {
+            node.left = rotateLeft(node.left);
+            return rotateRight(node);
         }
 
-        else if (studentID < node.getStudentID()) {
-            node.left = insert(node.left, studentID, student);
-            if (height(node.left) - height(node.right) == 2) {
-                if (studentID < node.left.getStudentID())
-                    node = rotateLeft(node);
-                else node = leftRightRotate(node);
-            }
+        // Right Left Case
+        if (balance < -1 && studentID < node.right.getStudentID()) {
+            node.right = rotateRight(node.right);
+            return rotateLeft(node);
         }
-        else if (studentID > node.getStudentID()) {
-            node.right = insert(node.right, studentID, student);
-            if (height(node.right) - height(node.left) == 2) {
-                if (studentID > node.right.getStudentID())
-                    node = rotateRight(node);
-                else node = rightLeftRotate(node);
-            }
-        }
-        else;
-        node.height = Math.max(height(node.left), height(node.right));
 
         return node;
+    }
+
+    int getBalance(Node N) {
+        if (N == null)
+            return 0;
+
+        return height(N.left) - height(N.right);
     }
 
     public void insert(int studentID, Student student) {
@@ -137,7 +156,7 @@ public class AVLTree {
         if (node != null) {
             node.height = Math.max(height(node.left), height(node.right)) + 1;
 
-            int balance = height(node.left) - height(node.right);
+            int balance = getBalance(node);
 
             if (balance > 1) {
                 if (height(node.left.left) >= height(node.left.right)) {
