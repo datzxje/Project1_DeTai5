@@ -8,12 +8,17 @@ import java.util.List;
 
 public class HashTable {
     private List<Student>[] table;
-    private int modulo = 103;
+    private int modulo = 199;
+
     public HashTable() {
         table = new LinkedList[modulo];
         for (int i = 0; i < modulo; i++) {
             table[i] = new LinkedList<>();
         }
+    }
+
+    public int getModulo() {
+        return modulo;
     }
 
     public void insert(int studentID, Student student) {
@@ -85,5 +90,20 @@ public class HashTable {
         }
 
         return allStudents;
+    }
+
+    public void printHashTable() {
+        System.out.println("Danh sách sinh viên trong hashtable:");
+        for (int i = 0; i < table.length; i++) {
+            if (table[i].isEmpty()) {
+            }
+            else {
+                System.out.print("At " + i + ": ");
+                for (Student student : table[i]) {
+                    System.out.print(student.getStudentID() + " - ");
+                }
+                System.out.println();
+            }
+        }
     }
 }

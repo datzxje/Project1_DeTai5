@@ -2,29 +2,45 @@ package avl_tree;
 
 import student.Student;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class AVLTest {
+    private static String path = "src/student_data/student_data.txt";
     public static void main(String[] args) {
         AVLTree avlTree = new AVLTree();
-        Student linh = new Student(4, "Linh",2003,30,9);
-        Student dat = new Student(2,"Bui Duc",2002,28.6f,8.9f);
-        Student x = new Student(3,"Nguyen Hoan",2003,25.9f,9.1f);
-        Student y = new Student(1,"a",25,2,4);
-        Student z = new Student(6,"aa",23,4,5);
-        Student q = new Student(8,"a",4,5,6);
-        avlTree.insert(4, linh);
-        avlTree.insert(2, dat);
-        avlTree.insert(3,x);
-        avlTree.insert(1,y);
-        avlTree.insert(6,z);
-        avlTree.insert(8,q);
-        avlTree.delete(avlTree.getRoot(),6);
 
-        avlTree.getRoot().setHeight(Math.max(avlTree.height(avlTree.getRoot().left),avlTree.height(avlTree.getRoot().right)) + 1);
-        System.out.println(avlTree.getRoot().getHeight());
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    int studentID = Integer.parseInt(parts[0]);
+                    String name = parts[1];
+                    int yearOfBirth = Integer.parseInt(parts[2]);
+                    float score = Float.parseFloat(parts[3]);
+                    float avgScore = Float.parseFloat(parts[4]);
+                    Student student = new Student(studentID, name, yearOfBirth, score, avgScore);
+                    avlTree.insert(studentID, student);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Cây ban đầu: \n");
+        print2DUtil(avlTree.getRoot(), 0);
+        System.out.println("********************************");
+        System.out.println("Cây sau khi xóa node 20216568: \n");
+        avlTree.delete(avlTree.getRoot(),20216568);
         print2DUtil(avlTree.getRoot(),0);
+        System.out.println("********************************");
+
     }
 
-    private static final int COUNT = 4; // Adjust the spacing as needed
+    private static final int COUNT = 4;
 
     public static void print2DUtil(Node root, int space) {
         if (root == null)
@@ -35,7 +51,7 @@ public class AVLTest {
         System.out.println();
 
         for (int i = COUNT; i < space; i++) {
-            System.out.print(" ");
+            System.out.print("     ");
         }
         System.out.print(root.getStudentID() + " (" + root.height + ") ");
         System.out.println();
