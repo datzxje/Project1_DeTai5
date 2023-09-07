@@ -102,17 +102,19 @@ public class AVLTree {
         root = insert(root, studentID, student);
     }
 
-    public void showStudentInf(int studentID) {
+    public String showStudentInf(int studentID) {
         Node node = search(root, studentID);
         if (node != null) {
-            System.out.println("Student ID: " + studentID);
-            System.out.println("Name: " + node.student.getName());
-            System.out.println("Year Of Birth: " + node.student.getYearOfBirth());
-            System.out.println("Score: " + node.student.getScore());
-            System.out.println("Average Score: " + node.student.getAvgScore());
-            System.out.println("********************************");
+            String studentInfo = "Student ID: " + studentID + "\n" +
+                    "Name: " + node.student.getName() + "\n" +
+                    "Year Of Birth: " + node.student.getYearOfBirth() + "\n" +
+                    "Score: " + node.student.getScore() + "\n" +
+                    "Average Score: " + node.student.getAvgScore();
+            System.out.println(studentInfo);  // In ra màn hình console (không bắt buộc)
+            return studentInfo;
         } else {
             System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+            return null;  // Trả về null nếu không tìm thấy sinh viên
         }
     }
 

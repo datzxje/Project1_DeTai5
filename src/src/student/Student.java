@@ -50,4 +50,17 @@ public class Student {
     public void setAvgScore(float avgScore) {
         this.avgScore = avgScore;
     }
+
+    @Override
+    public String toString() {
+        return (
+                "--------------------------------\n" +
+                        "Student ID: " + studentID + "\n" +
+                        "Name: " + name + "\n" +
+                        "Year Of Birth: " + yearOfBirth + "\n" +
+                        "Score: " + score + "\n" +
+                        "Average Score: " + avgScore + "\n" +
+                        "******************************"
+        );
+    }
 }
