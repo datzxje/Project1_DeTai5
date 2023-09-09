@@ -25,7 +25,19 @@ public class HashTable {
         int hashValue = hashStudentID(studentID);
 
         List<Student> chain = table[hashValue];
-        chain.add(student);
+        boolean studentExists = false;
+
+        for (Student existedStudent : chain) {
+            if (existedStudent.getStudentID() == studentID) {
+                System.out.println("Sinh viên " + studentID + " đã tồn tại!");
+                studentExists = true;
+                break;
+            }
+        }
+
+        if (!studentExists) {
+            chain.add(student);
+        }
     }
 
     public int hashStudentID(int studentID) {
