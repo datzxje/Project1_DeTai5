@@ -37,5 +37,8 @@ public class HashTest {
         System.out.println("Bảng băm sau khi xóa 20216568: \n");
         hashTable.printHashTable();
         System.out.println("********************************");
+        System.out.println("Thêm 1 học sinh");
+        Student newStudent = new Student(20216585,"Bui Huong",2002,26,8);
+        hashTable.insert(20216585, newStudent);
     }
 }
