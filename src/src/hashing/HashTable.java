@@ -2,7 +2,6 @@ package hashing;
 
 import student.Student;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +14,10 @@ public class HashTable {
         for (int i = 0; i < modulo; i++) {
             table[i] = new LinkedList<>();
         }
+    }
+
+    public List<Student>[] getTable() {
+        return table;
     }
 
     public int getModulo() {
@@ -92,16 +95,6 @@ public class HashTable {
 
         System.out.println("Không có sinh viên với MSSV " + studentID + " trong danh sách");
         System.out.println("********************************");
-    }
-
-    public List<Student> getAllStudents() {
-        List<Student> allStudents = new ArrayList<>();
-
-        for (List<Student> chain : table) {
-            allStudents.addAll(chain);
-        }
-
-        return allStudents;
     }
 
     public void printHashTable() {
