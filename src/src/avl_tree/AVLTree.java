@@ -61,9 +61,10 @@ public class AVLTree {
             node.left = insert(node.left, studentID, student);
         else if (studentID > node.getStudentID())
             node.right = insert(node.right, studentID,student);
-        else
+        else {
+            System.out.println("Sinh viên " + studentID + " đã tồn tại!");
             return node;
-
+        }
         node.height = 1 + Math.max(height(node.left), height(node.right));
 
         int balance = getBalance(node);
@@ -121,7 +122,7 @@ public class AVLTree {
         if (node != null) {
             node.student.setScore(newScore);
         } else {
-            System.out.println("Student with ID " + studentID + " not found.");
+            System.out.println("Không có sinh viên " + studentID + "trong danh sách");
         }
     }
 
@@ -183,7 +184,7 @@ public class AVLTree {
         return node;
     }
 
-    private Node search(Node node, int studentID) {
+    public Node search(Node node, int studentID) {
         if (node == null || node.studentID == studentID) {
             return node;
         }
