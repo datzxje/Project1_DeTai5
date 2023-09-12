@@ -73,8 +73,12 @@ public class AVLProgram {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            System.out.println("Đã thêm sinh viên " + studentID + " vào file");
+            System.out.println("********************************");
         } else {
-            System.out.println("Sinh viên với MSSV  " + studentID + " đã tồn tại trong file.");
+            System.out.println("Sinh viên với MSSV " + studentID + " đã tồn tại trong file.");
+            System.out.println("********************************");
         }
     }
 
@@ -119,7 +123,10 @@ public class AVLProgram {
             System.out.println("Điểm của sinh viên " + studentID + " đã được cập nhật");
             System.out.println("********************************");
         }
-        else System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+        else {
+            System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+            System.out.println("********************************");
+        }
     }
 
     private static void deleteStudent(AVLTree avlTree) {
@@ -130,9 +137,13 @@ public class AVLProgram {
         if (node != null) {
             avlTree.delete(avlTree.getRoot(), studentID);
             System.out.println("Đã xóa sinh viên " + studentID + " ra khỏi danh sách");
+            System.out.println("********************************");
             deleteStudentInputFile(studentID);
         }
-        else System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+        else {
+            System.out.println("Không có sinh viên " + studentID + " trong danh sách");
+            System.out.println("********************************");
+        }
     }
 
     private static void updateScoreInputFile(int studentID, AVLTree avlTree, float newScore) {
@@ -152,7 +163,6 @@ public class AVLProgram {
                 if (line.contains(String.valueOf(studentID))) {
                     // Cập nhật dòng
                     line = wantedStudent.getStudentID() + "," + wantedStudent.getName() + "," + wantedStudent.getYearOfBirth() + "," + wantedStudent.getScore() + "," + wantedStudent.getAvgScore();
-                    System.out.println("có");
                     updated = true;
                 }
                 bufferedWriter.write(line);
@@ -168,7 +178,6 @@ public class AVLProgram {
             }
             else{
                 tempFile.delete();
-                System.out.println("Không tìm thấy dòng cần cập nhật.");
             }
         }
         catch(IOException ignored){

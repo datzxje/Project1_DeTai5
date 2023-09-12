@@ -73,8 +73,12 @@ public class HashProgram {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            System.out.println("Đã thêm sinh viên " + studentID + " vào file");
+            System.out.println("********************************");
         } else {
-            System.out.println("Sinh viên với MSSV  " + studentID + " đã tồn tại trong file.");
+            System.out.println("Sinh viên với MSSV " + studentID + " đã tồn tại trong file.");
+            System.out.println("********************************");
         }
     }
 
@@ -130,7 +134,6 @@ public class HashProgram {
         int studentID = keyboard.nextInt();
 
         hashTable.delete(studentID);
-        System.out.println("Đã xóa sinh viên " + studentID + " ra khỏi danh sách");
         deleteStudentInputFile(studentID);
     }
 
@@ -165,7 +168,6 @@ public class HashProgram {
             }
             else{
                 tempFile.delete(); // Không cập nhật, xóa file tạm
-                System.out.println("Không tìm thấy dòng cần cập nhật.");
             }
         }
         catch(IOException ignored){

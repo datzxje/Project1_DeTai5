@@ -87,7 +87,7 @@ public class HashTable {
         for (Student student : chain) {
             if (student.getStudentID() == studentID) {
                 chain.remove(student);
-                System.out.println("Đã xóa sinh viên ra khỏi danh sách với MSSV " + studentID);
+                System.out.println("Đã xóa sinh viên " + studentID + " ra khỏi danh sách");
                 System.out.println("********************************");
                 return;
             }
